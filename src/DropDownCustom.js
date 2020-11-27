@@ -16,28 +16,23 @@ export default function DropDownCustom(props) {
 
     const toggleItem=(id, key)=>{
         let tempp = list[id]
-       
         setNestItem(tempp)
         setnestListOpen(prevState => !prevState)
         setkeyword('')
         let temp = list[id]
         temp.selected = !temp.selected
         list[id]=temp
-        console.log(id,key,temp,temp.selected)
-        setHeadeTitle(list[id].value)
+      //  setHeadeTitle(list[id].value)
         setLocation(temp.selected)
         
       }
-
-      const toggleNestList=(id) =>{
-        let temp = list[id]
-        console.log(temp.students)
-        setNestItem(temp)
-        setnestListOpen(prevState => !prevState)
-        setkeyword('')
-        // ()=>{
-       
+    const toggleNestItem=(id,opId)=>{
+      let temp = list[id].options[opId]
+      console.log(temp.value)
+      setHeadeTitle(temp.value)
+      setLocation(list[id].selected)
     }
+   
     const toggleList=() =>{
         setListOpen(prevState => !prevState)
         setkeyword('')
@@ -62,7 +57,7 @@ export default function DropDownCustom(props) {
                     <ul className="dd-list">
                         
                         {nestItem.options.map(ite=>
-                            <li className="dd-list-item">{ite.value}</li>
+                            <li key={ite.id} className="dd-list-item" onClick={()=>toggleNestItem(item.id,ite.id)}>{ite.value}</li>
                             )}
                     </ul>
                     :<ul></ul>}

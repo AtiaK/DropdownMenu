@@ -12,8 +12,8 @@ function App() {
       selected: false,
       label: "Item 1", value: "Item One" ,
       options: [
-        { label: "Item 1-1", value: "Item one-One" },
-        { label: "Item 1-2", value: "Item one-Two" }
+        { id:0,label: "Item 1-1", value: "Item one-One" },
+        { id:1,label: "Item 1-2", value: "Item one-Two" }
       ] },
     {
       id:1,
@@ -22,8 +22,8 @@ function App() {
     label: "Item 2", value:"Item two",
     
     options: [
-      { label: "Item 2-1", value: "Item Two-One" },
-      { label: "Item 2-2", value: "Item Two-Two" }
+      {id:0, label: "Item 2-1", value: "Item Two-One" },
+      {id:1, label: "Item 2-2", value: "Item Two-Two" }
     ] 
   },
   {id:2, key: 'location',
@@ -31,8 +31,8 @@ function App() {
    label: "Item 3", 
    value: "Item Three",
    options: [
-    { label: "Item 3-1", value: "Item three-One" },
-    { label: "Item 3-2", value: "Item three-Two" }
+    {id:0, label: "Item 3-1", value: "Item three-One" },
+    {id:1, label: "Item 3-2", value: "Item three-Two" }
   ] }]
   // const list=[
   //   {
