@@ -54,7 +54,7 @@ export default function DropDownCustom(props) {
                 <div className="dd-header">
                 <div className="dd-header-title" >{item.value}</div>
                     {nestlistOpen && nestItem.id===item.id?
-                    <ul className="dd-list">
+                    <ul style={{display:"flex", flexDirection:"column"}}>
                         
                         {nestItem.options.map(ite=>
                             <li key={ite.id} className="dd-list-item" onClick={()=>toggleNestItem(item.id,ite.id)}>{ite.value}</li>
