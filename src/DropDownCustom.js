@@ -24,7 +24,7 @@ export default function DropDownCustom(props) {
         temp.selected = !temp.selected
         list[id]=temp
         console.log(id,key,temp,temp.selected)
-        setHeadeTitle(list[id].title)
+        setHeadeTitle(list[id].value)
         setLocation(temp.selected)
         
       }
