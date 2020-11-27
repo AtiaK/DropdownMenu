@@ -19,7 +19,7 @@ function App() {
       id:1,
       key: 'location',
       selected: false,
-    label: "Item 2", 
+    label: "Item 2", value:"Item two",
     options: [
       { label: "Item 2-1", value: "Item Two-One" },
       { label: "Item 2-2", value: "Item Two-Two" }

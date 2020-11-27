@@ -58,7 +58,7 @@ export default function DropDownCustom(props) {
          onClick={() =>toggleItem(item.id, item.key)}>
                 <div className="dd-header">
                 <div className="dd-header-title" >{item.value}</div>
-                    {nestlistOpen && nestItem.id==item.id?
+                    {nestlistOpen && nestItem.id===item.id?
                     <ul className="dd-list">
                         
                         {nestItem.options.map(ite=>
