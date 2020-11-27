@@ -41,15 +41,7 @@ export default function DropDownCustom(props) {
     const toggleList=() =>{
         setListOpen(prevState => !prevState)
         setkeyword('')
-        // ()=>{
-      //       if (listOpen && searchField.current) {
-      //           searchField.current.focus()
-      //           setkeyword('')
-      //       // }
-      // }
-    }
-    const handleClickOutside=()=>{
-        setListOpen(false)
+       
     }
     return (
         <div className="dd-wrapper">
@@ -65,17 +57,12 @@ export default function DropDownCustom(props) {
          <li className="dd-list-item" key={item.id} 
          onClick={() =>toggleItem(item.id, item.key)}>
                 <div className="dd-header">
-                <div className="dd-header-title" >{item.title}</div>
+                <div className="dd-header-title" >{item.value}</div>
                     {nestlistOpen && nestItem.id==item.id?
                     <ul className="dd-list">
-                        {/* {nestItem.map(ite=>
-                            {ite.id==item.id?
-                            <li>{ite.id}</li>
-                            :<li></li>}
-                        )} */}
                         
-                        {nestItem.students.map(ite=>
-                            <li className="dd-list-item">{ite.department}</li>
+                        {nestItem.options.map(ite=>
+                            <li className="dd-list-item">{ite.value}</li>
                             )}
                     </ul>
                     :<ul></ul>}
@@ -87,8 +74,3 @@ export default function DropDownCustom(props) {
     )
 }
 
-// <ul>
-// {item.students.map(it=>
-//     <li>{it.department}</li>
-//     )}
-// </ul>
