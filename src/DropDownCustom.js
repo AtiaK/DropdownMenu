@@ -15,18 +15,18 @@ export default function DropDownCustom(props) {
     const [headerTitle,setHeadeTitle]=useState(props.title)
 
     const toggleItem=(id, key)=>{
+        let tempp = list[id]
+       
+        setNestItem(tempp)
+        setnestListOpen(prevState => !prevState)
+        setkeyword('')
         let temp = list[id]
         temp.selected = !temp.selected
         list[id]=temp
         console.log(id,key,temp,temp.selected)
         setHeadeTitle(list[id].title)
         setLocation(temp.selected)
-      }
-
-      const toggleItemNest=(id, key)=>{
-        let temp = list.students[id]
-        temp.selected = !temp.selected
-        list.students[id]=temp
+        
       }
 
       const toggleNestList=(id) =>{
@@ -36,21 +36,17 @@ export default function DropDownCustom(props) {
         setnestListOpen(prevState => !prevState)
         setkeyword('')
         // ()=>{
-        if (nestlistOpen && searchNestField.current) {
-            searchNestField.current.focus()
-            
-        // }
-      }
+       
     }
     const toggleList=() =>{
         setListOpen(prevState => !prevState)
         setkeyword('')
         // ()=>{
-            if (listOpen && searchField.current) {
-                searchField.current.focus()
-                setkeyword('')
-            // }
-      }
+      //       if (listOpen && searchField.current) {
+      //           searchField.current.focus()
+      //           setkeyword('')
+      //       // }
+      // }
     }
     const handleClickOutside=()=>{
         setListOpen(false)
@@ -69,9 +65,9 @@ export default function DropDownCustom(props) {
          <li className="dd-list-item" key={item.id} 
          onClick={() =>toggleItem(item.id, item.key)}>
                 <div className="dd-header">
-                <div className="dd-header-title" onClick={()=>toggleNestList(item.id)}>{item.title}</div>
+                <div className="dd-header-title" >{item.title}</div>
                     {nestlistOpen && nestItem.id==item.id?
-                    <ul>
+                    <ul className="dd-list">
                         {/* {nestItem.map(ite=>
                             {ite.id==item.id?
                             <li>{ite.id}</li>
@@ -79,7 +75,7 @@ export default function DropDownCustom(props) {
                         )} */}
                         
                         {nestItem.students.map(ite=>
-                            <li>{ite.department}</li>
+                            <li className="dd-list-item">{ite.department}</li>
                             )}
                     </ul>
                     :<ul></ul>}

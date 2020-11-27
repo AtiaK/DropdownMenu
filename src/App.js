@@ -47,7 +47,7 @@ function App() {
       id: 5,
       title: 'Oslo',
       selected: false,
-      students:[{name:'Name',department:'bscs'}],
+      students:[{name:'Name',department:'bscs'},{name:'Name',department:'bscs'},{name:'Name',department:'bscs'}],
       key: 'location'
     }
   ]
