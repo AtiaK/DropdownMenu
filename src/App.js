@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import DropDownCustom from './DropDownCustom';
 import { useEffect } from 'react';
+import ImageUpload from './components/imageUpload';
 
 //import Dropdown from './DropdownMenu';
 
@@ -95,11 +96,12 @@ function App() {
   
   return (
     <div className="App">
-      <DropDownCustom
+      {/* <DropDownCustom
          title="Select"
          list={list}
         
-      />
+      /> */}
+      <ImageUpload/>
     </div>
   );
 }
