@@ -34,7 +34,13 @@ function App() {
    options: [
     {id:0, label: "Item 3-1", value: "Item three-One" },
     {id:1, label: "Item 3-2", value: "Item three-Two" }
-  ] }]
+  ] },
+  {id:3, key: 'location',
+   selected: false, 
+   label: "Item 4", 
+   value: "Item four",
+   options: [] }
+]
   // const list=[
   //   {
   //       id: 0,
@@ -96,12 +102,12 @@ function App() {
   
   return (
     <div className="App">
-      {/* <DropDownCustom
+      <DropDownCustom
          title="Select"
          list={list}
         
-      /> */}
-      <ImageUpload/>
+      />
+    
     </div>
   );
 }
