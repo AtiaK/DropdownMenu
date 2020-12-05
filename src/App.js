@@ -1,115 +1,163 @@
-import logo from './logo.svg';
-import './App.css';
-import DropDownCustom from './DropDownCustom';
-import { useEffect } from 'react';
-import ImageUpload from './components/imageUpload';
+import React, { Component, useState} from 'react';
+import Dropdown from './dropdown'
 
-//import Dropdown from './DropdownMenu';
-
-function App() {
-  const list = [
-    { id:0, key: 
-      'location',
-      selected: false,
-      label: "Item 1", value: "Item One" ,
-      options: [
-        { id:0,label: "Item 1-1", value: "Item one-One" },
-        { id:1,label: "Item 1-2", value: "Item one-Two" }
-      ] },
-    {
-      id:1,
-      key: 'location',
-      selected: false,
-    label: "Item 2", value:"Item two",
-    
-    options: [
-      {id:0, label: "Item 2-1", value: "Item Two-One" },
-      {id:1, label: "Item 2-2", value: "Item Two-Two" }
-    ] 
-  },
-  {id:2, key: 'location',
-   selected: false, 
-   label: "Item 3", 
-   value: "Item Three",
-   options: [
-    {id:0, label: "Item 3-1", value: "Item three-One" },
-    {id:1, label: "Item 3-2", value: "Item three-Two" }
-  ] },
-  {id:3, key: 'location',
-   selected: false, 
-   label: "Item 4", 
-   value: "Item four",
-   options: [] }
-]
-  // const list=[
-  //   {
-  //       id: 0,
-  //       title: 'New York',
-  //       students:[{name:'Name',department:'bscs'}],
-  //       selected: false,
-  //       key: 'location'
-  //   },
-  //   {
-  //     id: 1,
-  //     title: 'Dublin',
-  //     students:[{name:'Name',department:'bscs'}],
-  //     selected: false,
-  //     key: 'location'
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'California',
-  //     students:[{name:'Name',department:'bscs'}],
-  //     selected: false,
-  //     key: 'location'
-  //   },
-  //   {
-  //     id: 3,
-  //     title: 'Istanbul',
-  //     students:[{name:'Name',department:'bscs'}],
-  //     selected: false,
-  //     key: 'location'
-  //   },
-  //   {
-  //     id: 4,
-  //     title: 'Izmir',
-  //     students:[{name:'Name',department:'bscs'}],
-  //     selected: false,
-  //     key: 'location'
-  //   },
-  //   {
-  //     id: 5,
-  //     title: 'Oslo',
-  //     selected: false,
-  //     students:[{name:'Name',department:'bscs'},{name:'Name',department:'bscs'},{name:'Name',department:'bscs'}],
-  //     key: 'location'
-  //   }
-  // ]
-
-  // useEffect=(()=>{
-  //   const count = list.filter(function(a) { return a.selected; }).length;
-  //   if(count === 0){
-  //     return {headerTitle: list.title}
-  //   }
-  //   else if(count === 1){
-  //     return {headerTitle: `${count} ${list.titleHelper}`}
-  //   }
-  //   else if(count > 1){
-  //     return {headerTitle: `${count} ${list.titleHelper}s`}
-  //   }
-  // },[list])
-
+export default function App() {
+   const [key,setKey] =useState('')
+    const state = {
+      location: [
+        {
+          id: 0,
+          title: 'New York',
+          selected: false,
+          key: 'location',
+         
+        },
+        {
+          id: 1,
+          title: 'Dublin',
+          selected: false,
+          key: 'location',
+          
+        },
+        {
+          id: 2,
+          title: 'California',
+          selected: false,
+          key: 'location',
+        },
+        {
+          id: 3,
+          title: 'Istanbul',
+          selected: false,
+          key: 'location',
+        },
+        {
+          id: 4,
+          title: 'Izmir',
+          selected: false,
+          key: 'location',
+        },
+        {
+          id: 5,
+          title: 'Oslo',
+          selected: false,
+          key: 'location',
+        },
+        {
+          id: 6,
+          title: 'Zurich',
+          selected: false,
+          key: 'location',
+        },
+      ],
+      fruit: [
+        {
+          id: 0,
+          title: 'Apple',
+          selected: false,
+          key: 'fruit',
+          options: [
+            {id:0, label: "Item 3-1", value: "Item three-One" },
+            {id:1, label: "Item 3-2", value: "Item three-Two" }
+          ]
+        },
+        {
+          id: 1,
+          title: 'Orange',
+          selected: false,
+          key: 'fruit',
+          options:[]
+        },
+        {
+          id: 2,
+          title: 'Grape',
+          selected: false,
+          key: 'fruit',
+          options: [
+            {id:0, label: "Item 3-1", value: "Item three-One" },
+            {id:1, label: "Item 3-2", value: "Item three-Two" }
+          ]
+        },
+        {
+          id: 3,
+          title: 'Pomegranate',
+          selected: false,
+          key: 'fruit',
+          options: [
+            {id:0, label: "Item 3-1", value: "Item three-One" },
+            {id:1, label: "Item 3-2", value: "Item three-Two" }
+          ]
+        },
+        {
+          id: 4,
+          title: 'Strawberry',
+          selected: false,
+          key: 'fruit',
+          options: [
+            {id:0, label: "Item 3-1", value: "Item three-One" },
+            {id:1, label: "Item 3-2", value: "Item three-Two" }
+          ]
+        },
+        {
+          id: 5,
+          title: 'Banana',
+          selected: false,
+          key: 'fruit',
+          options: [
+            {id:0, label: "Item 3-1", value: "Item three-One" },
+            {id:1, label: "Item 3-2", value: "Item three-Two" }
+          ]
+        },
+        {
+          id: 6,
+          title: 'Blueberry',
+          selected: false,
+          key: 'fruit',
+          options: [
+            {id:0, label: "Item 3-1", value: "Item three-One" },
+            {id:1, label: "Item 3-2", value: "Item three-Two" }
+          ]
+        },
+        {
+          id: 7,
+          title: 'Watermelon',
+          selected: false,
+          key: 'fruit',
+          options: [
+            {id:0, label: "Item 3-1", value: "Item three-One" },
+            {id:1, label: "Item 3-2", value: "Item three-Two" }
+          ]
+        },
+        {
+          id: 8,
+          title: 'Water',
+          selected: false,
+          key: 'fruit',
+          options: [],
+          
+        },
+      ],
+    };
   
-  return (
-    <div className="App">
-      <DropDownCustom
-         title="Select"
-         list={list}
-        
-      />
-    
-    </div>
-  );
-}
 
-export default App;
+  const resetThenSet = (id, key) => {
+    const temp = JSON.parse(JSON.stringify(state[key]));
+    temp.forEach((item) => item.selected = false);
+    temp[id].selected = true;
+    setKey(temp)
+  }
+    return (
+      <div className="App">
+       
+        <h3>Searchable</h3>
+          <Dropdown
+            searchable={['Search for fruit', 'No matching fruit']}
+            title="Select fruit"
+            list={state.fruit}
+            resetThenSet={resetThenSet}
+          />
+      
+      </div>
+    );
+  
+}
