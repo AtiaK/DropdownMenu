@@ -13,7 +13,7 @@ export default function DropDown(props:any) {
   const [searchField, setSearchField] = useState(React.createRef<HTMLInputElement>());
   const searchable=['Search for fruit', 'No matching fruit']
   const [headerTitle, setHeadeTitle] = useState(props.title);
-  
+  const [searchBox,setSearchBox]=useState(true)
  
   const refs = list.reduce((acc:any, value:any) => {
     acc[value.id] = React.createRef();
@@ -32,9 +32,9 @@ export default function DropDown(props:any) {
     console.log(temp.value);
     setHeadeTitle(temp.value);
     setListOpen(false)
+    setSearchBox(false)
     setLocation(list[id].selected);
     setTimeout(() => {
-
       setListOpen(true)
       setnestListOpen((prevState) => !prevState);
     }, 400);
@@ -72,31 +72,19 @@ export default function DropDown(props:any) {
     const { list, searchable } = props;
     
     let tempList = list;
-    
     if (keyword.length) {
-      let nestTempList:any[]=[]
       tempList = list
-        .filter((item:any) => {
-          if(item.title.toLowerCase().slice(0, keyword.length).includes(keyword)){
-              nestTempList.push(item)
-          }
-          item.options.filter((option:any)=>{
-            if(option.label.toLowerCase().slice(0, keyword.length).includes(keyword)){
-              nestTempList.push(item)
-              setnestListOpen(true)
-            }
-          })
-        }   
-        ).sort((a:any, b:any) => {
+        .filter((item:any) => (
+          item.title.toLowerCase().slice(0, keyword.length).includes(keyword)
+        )).sort((a:any, b:any) => {
           if (a.title < b.title) { return -1; }
           if (a.title > b.title) { return 1; }
           return 0;
         });
-     
-     tempList=nestTempList
     }
 
     if (tempList.length) {
+      
       return (
         tempList.map((item:any) => (
           <li
@@ -106,34 +94,25 @@ export default function DropDown(props:any) {
           key={item.id}
           onClick={() => toggleItem(item.id, item.key)}
         >
-          <button
-            type="button"
-            className="dd-list-item"
-            key={item.id}
-          >
-            {item.title}
-            {' '}
-           
-              <div >
-                <div>
-                  {
-                  item.options.length>0?(
+         <div className="dd-header">
+                <div className="dd-header-titles">
+                {item.options.length>0?(
                   <div>
-                    {item.value}
+                    {item.title}
                     {nestlistOpen ? (
                       <ChevronUp size={24} />
                     ) : (
                       <ChevronDown size={24} />
                     )}
                   </div>
-                  ):<p onClick={()=>setHeadeTitle(item.value)}>{item.value}</p>}
+                  ):<p onClick={()=>setHeadeTitle(item.title)}>{item.title}</p>}
+
+
                 </div>
-                
+
                 {nestlistOpen && nestItem.id === item.id ? (
-                  
                   <ul style={{ display: "flex", flexDirection: "column" }}>
-                    { nestItem.options.length>0?
-                    nestItem.options.map((ite:any) => (
+                    {nestItem.options.map((ite: { id: string | number; value: React.ReactNode; }) => (
                       <li
                         key={ite.id}
                         className="dd-list-item"
@@ -141,16 +120,15 @@ export default function DropDown(props:any) {
                       >
                         <div className="dd-header-title-list">{ite.value}</div>
                       </li>
-                    ))
-                    :<p></p>}
-                  </ul> 
+                    ))}
+                  </ul>
                 ) : (
                   <ul></ul>
                 )}
               </div>
            
             {item.selected}
-          </button>
+          
           </li>
         ))
       );
@@ -161,15 +139,12 @@ export default function DropDown(props:any) {
 
     return (
       <div className="dd-wrapper">
-        <button
-          type="button"
-          className="dd-header"
-          onClick={toggleList}
-        >
-          {headerTitle}
-        {listOpen
-            ?<ChevronUp size={24} /> : <ChevronDown size={24} />}
-        </button>
+         <div className="dd-headers" onClick={toggleList}>
+        
+        <div className="dd-header-title">{headerTitle}</div>
+       
+        {listOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+      </div>
         {listOpen && (
           <div
             role="list"
@@ -178,16 +153,17 @@ export default function DropDown(props:any) {
           >
             {searchable
             && (
-              
+            searchBox?
             <input
               ref={searchField}
               className="dd-list-search-bar"
               placeholder={searchable[0]}
               onChange={(e) => filterList(e)}
             />
+            :<p></p>
             )}
             <div className="dd-scroll-list">
-              <ul id="ul-list">
+              <ul id="dd-list">
                 {listItems()}
               </ul>
             </div>
