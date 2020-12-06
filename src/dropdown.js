@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import './styles/global.sass';
 import { ChevronDown, ChevronUp } from "react-feather";
 export default function DropDown(props) {
@@ -19,29 +19,22 @@ export default function DropDown(props) {
   const [close, setClose] = useState(true);
   const searchable=['Search for fruit', 'No matching fruit']
   const [headerTitle, setHeadeTitle] = useState(props.title);
-
-  const refs = list.reduce((acc, value) => {
-    acc[value.id] = React.createRef();
-    return acc;
-  }, {});
+  
  
-  const handleClick = (id) =>{
-   setListOpen(true)
-   setnestListOpen((prevState) => !prevState);
-    refs[id].current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  }
 
+  
   const toggleNestItem = (id, opId) => {
     let temp = list[id].options[opId];
     console.log(temp.value);
     setHeadeTitle(temp.value);
     setListOpen(false)
     setLocation(list[id].selected);
+    setTimeout(() => {
+
+      setListOpen(true)
+      setnestListOpen((prevState) => !prevState);
+    }, 400);
     
-    handleClick(id)
   };
 
   const toggleItem = (id, key) => {
@@ -88,25 +81,34 @@ export default function DropDown(props) {
     let tempList = list;
     
     if (keyword.length) {
-     
+      let nestTempList=[]
       tempList = list
-        .filter((item) => 
-          item.title.toLowerCase().slice(0, keyword.length).includes(keyword)
+        .filter((item) => {
+          if(item.title.toLowerCase().slice(0, keyword.length).includes(keyword)){
+              nestTempList.push(item)
+          }
+          item.options.filter(option=>{
+            if(option.label.toLowerCase().slice(0, keyword.length).includes(keyword)){
+              nestTempList.push(item)
+              setnestListOpen(true)
+            }
+          })
+        }   
         ).sort((a, b) => {
           if (a.title < b.title) { return -1; }
           if (a.title > b.title) { return 1; }
           return 0;
         });
-    
      
+     tempList=nestTempList
     }
 
     if (tempList.length) {
       return (
         tempList.map((item) => (
           <li
-          // className="dd-list-item"
-          ref={refs[item.id]}
+          className="dd-list-item"
+          id={item.id}
           key={item.id}
           onClick={() => toggleItem(item.id, item.key)}
         >
@@ -192,7 +194,7 @@ export default function DropDown(props) {
             />
             )}
             <div className="dd-scroll-list">
-              <ul >
+              <ul id="ul-list">
                 {listItems()}
               </ul>
             </div>

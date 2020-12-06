@@ -1,38 +1,20 @@
-import React from 'react';
- 
-const list = [ 
-    {
-      id: 0,
-      title: 'New York',
-      selected: false,
-      key: 'location',
-     
-    },
-    {
-      id: 1,
-      title: 'Dublin',
-      selected: false,
-      key: 'location',
-      
-    },
-    {
-      id: 2,
-      title: 'California',
-      selected: false,
-      key: 'location',
-    },
-    {
-      id: 3,
-      title: 'Istanbul',
-      selected: false,
-      key: 'location',
-    },
-    {
-      id: 4,
-      title: 'Izmir',
-      selected: false,
-      key: 'location',
-    }    ]
+import React,{useEffect} from 'react';
+import './styles/global.sass';
+const list = [
+  {
+    id: 'a',
+    firstname: 'Robin',
+    lastname: 'Wieruch',
+    year: 1988,
+  },
+  {
+    id: 'b',
+    firstname: 'Dave',
+    lastname: 'Davidds',
+    year: 1990,
+  },
+  
+]
 
 const List = () => {
   const refs = list.reduce((acc, value) => {
@@ -60,7 +42,7 @@ const List = () => {
           </li>
         ))}
       </ul>
- 
+      <div className="dd-scroll-list">
       <ul>
         {list.map(item => (
           <li
@@ -76,6 +58,7 @@ const List = () => {
           </li>
         ))}
       </ul>
+      </div>
     </div>
   );
 };

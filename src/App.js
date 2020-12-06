@@ -116,7 +116,8 @@ export default function App() {
           selected: false,
           key: 'fruit',
           options: [
-            
+            {id:0, label: "Item 3-1", value: "Item three-One" },
+            {id:1, label: "Item 3-2", value: "Item three-Two" }
           ]
         },
         {
@@ -186,13 +187,13 @@ export default function App() {
       <div className="App">
        
         <h3>Searchable</h3>
-          <Dropdown
+          {/* <Dropdown
             searchable={['Search for fruit', 'No matching fruit']}
             title="Select fruit"
             list={state}
             resetThenSet={resetThenSet}
-          />
-          {/* <List/> */}
+          /> */}
+      <List/>
       </div>
     );
   
