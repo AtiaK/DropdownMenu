@@ -56,7 +56,7 @@ export default function DropDown(props:any) {
 
   const toggleList=()=>{
    
-      setListOpen((prevState:any)=>!prevState.listOpen)
+      setListOpen((prevState)=>!prevState)
       setkeyword('')
       if (listOpen && searchField.current) {
         searchField.current.focus();
