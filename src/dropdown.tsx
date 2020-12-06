@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState,useRef , useEffect} from 'react';
 import './styles/global.sass';
 import { ChevronDown, ChevronUp } from "react-feather";
 export default function DropDown(props:any) {
@@ -13,18 +13,24 @@ export default function DropDown(props:any) {
   const [searchField, setSearchField] = useState(React.createRef<HTMLInputElement>());
   const searchable=['Search for fruit', 'No matching fruit']
   const [headerTitle, setHeadeTitle] = useState(props.title);
-  
+  const [ch, setCh] = useState(0);
   const refs = list.reduce((acc:any, value:any) => {
     acc[value.id] = React.createRef();
     return acc;
   }, {});
  
-  
-  const handleClick = (id:any) =>
+  useEffect(() => {
+if(listOpen === true){
+ handleClick(ch)
+}
+    
+  }, [listOpen, ch])
+  const handleClick = (id:any) => {
     refs[id].current.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
+  }
 
   const toggleNestItem = (id:any, opId:any) => {
     let temp = list[id].options[opId];
@@ -37,9 +43,9 @@ export default function DropDown(props:any) {
       setListOpen(true)
       setnestListOpen((prevState) => !prevState);
     }, 400);
-    if(listOpen){
-      handleClick(id)
-    }
+ 
+      
+
   };
 
   const toggleItem = (id:any, key:any) => {
@@ -51,6 +57,7 @@ export default function DropDown(props:any) {
     temp.selected = !temp.selected;
     list[id] = temp;
     setLocation(temp.selected);
+    handleClick(id)
   };
 
   const toggleList=()=>{
@@ -80,12 +87,14 @@ export default function DropDown(props:any) {
           if (a.title > b.title) { return 1; }
           return 0;
         });
+ 
     }
 
     if (tempList.length) {
       
       return (
         tempList.map((item:any) => (
+          
           <li
           className="dd-list-item"
           id={item.id}
@@ -94,17 +103,17 @@ export default function DropDown(props:any) {
           onClick={() => toggleItem(item.id, item.key)}
         >
          <div className="dd-header">
-                <div className="dd-header-titles">
+                <div className={`dd-header-titles ${headerTitle === `${item.title}` ? "active": ""}`}>
                 {item.options.length>0?(
-                  <div>
+                  <div style={{display:"flex", justifyContent:"space-between", width:"100%"}}>
                     {item.title}
                     {nestlistOpen ? (
-                      <ChevronUp size={24} />
+                      <ChevronDown size={24} />
                     ) : (
                       <ChevronDown size={24} />
                     )}
                   </div>
-                  ):<p onClick={()=>setHeadeTitle(item.title)}>{item.title}</p>}
+                  ):<div style={{width:"100%"}}  onClick={()=>{setHeadeTitle(item.title);  setCh(item.id)}} >{item.title}</div>}
 
 
                 </div>
@@ -117,7 +126,7 @@ export default function DropDown(props:any) {
                         className="dd-list-item"
                         onClick={() => toggleNestItem(item.id, ite.id)}
                       >
-                        <div className="dd-header-title-list">{ite.value}</div>
+                        <div className={`dd-header-title-list ${headerTitle === `${ite.value}` ? "active": ""}`} >{ite.value}</div>
                       </li>
                     ))}
                   </ul>
@@ -162,7 +171,7 @@ export default function DropDown(props:any) {
            
             )}
             <div className="dd-scroll-list">
-              <ul id="dd-list">
+              <ul id="dd-list"  >
                 {listItems()}
               </ul>
             </div>
