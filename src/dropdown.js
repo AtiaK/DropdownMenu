@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import FontAwesome from 'react-fontawesome';
 import './styles/global.sass';
 import { ChevronDown, ChevronUp } from "react-feather";
 export default function DropDown(props) {
@@ -14,11 +13,26 @@ export default function DropDown(props) {
   const [nestlistOpen, setnestListOpen] = useState(false);
   const [nestItem, setNestItem] = useState(React.createRef());
   const [keyword, setkeyword] = useState("");
+  
   const [searchField, setSearchField] = useState(React.createRef());
   const [searchNestField, setSearchNestField] = useState(React.createRef());
   const [close, setClose] = useState(true);
   const searchable=['Search for fruit', 'No matching fruit']
   const [headerTitle, setHeadeTitle] = useState(props.title);
+
+  const refs = list.reduce((acc, value) => {
+    acc[value.id] = React.createRef();
+    return acc;
+  }, {});
+ 
+  const handleClick = (id) =>{
+   setListOpen(true)
+   setnestListOpen((prevState) => !prevState);
+    refs[id].current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
 
   const toggleNestItem = (id, opId) => {
     let temp = list[id].options[opId];
@@ -26,6 +40,8 @@ export default function DropDown(props) {
     setHeadeTitle(temp.value);
     setListOpen(false)
     setLocation(list[id].selected);
+    
+    handleClick(id)
   };
 
   const toggleItem = (id, key) => {
@@ -40,18 +56,18 @@ export default function DropDown(props) {
    
     setLocation(temp.selected);
   };
-  const selectItem=(title, id, stateKey)=>{
-    const { resetThenSet } = props;
-      setHeadeTitle(title)
-      setListOpen(false)
-      resetThenSet(id, stateKey)
-  }
+  // const selectItem=(title, id, stateKey)=>{
+  //   const { resetThenSet } = props;
+  //     setHeadeTitle(title)
+  //     setListOpen(false)
+  //     resetThenSet(id, stateKey)
+  // }
 
   const toggleList=()=>{
    
       setListOpen(prevState=>!prevState.listOpen)
       setkeyword('')
-  
+     
       // eslint-disable-next-line react/destructuring-assignment
       if (listOpen && searchField.current) {
         searchField.current.focus();
@@ -72,7 +88,7 @@ export default function DropDown(props) {
     let tempList = list;
     
     if (keyword.length) {
-      let nestTempList=[]
+     
       tempList = list
         .filter((item) => 
           item.title.toLowerCase().slice(0, keyword.length).includes(keyword)
@@ -80,24 +96,9 @@ export default function DropDown(props) {
           if (a.title < b.title) { return -1; }
           if (a.title > b.title) { return 1; }
           return 0;
-
         });
-      
-      nestTempList = list
-      .filter((item) => (
-        item.options.filter((opt)=>
-        
-        opt.value.toLowerCase().slice(0,keyword.length).includes(keyword)
-        )
-      )).sort((a, b) => {
-        if (a.title < b.title) { return -1; }
-        if (a.title > b.title) { return 1; }
-        return 0;
-      });
+    
      
-      // if (nestTempList.length>0){
-      //    tempList.push(nestTempList)
-      // }
     }
 
     if (tempList.length) {
@@ -105,6 +106,7 @@ export default function DropDown(props) {
         tempList.map((item) => (
           <li
           // className="dd-list-item"
+          ref={refs[item.id]}
           key={item.id}
           onClick={() => toggleItem(item.id, item.key)}
         >
@@ -167,10 +169,10 @@ export default function DropDown(props) {
         <button
           type="button"
           className="dd-header"
-          onClick={() => toggleList()}
+          onClick={toggleList}
         >
           {headerTitle}
-          {listOpen
+        {listOpen
             ?<ChevronUp size={24} /> : <ChevronDown size={24} />}
         </button>
         {listOpen && (
@@ -181,6 +183,7 @@ export default function DropDown(props) {
           >
             {searchable
             && (
+              
             <input
               ref={searchField}
               className="dd-list-search-bar"
