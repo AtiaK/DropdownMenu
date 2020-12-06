@@ -1,29 +1,33 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable react/prop-types */
 import React, { useState,useRef } from 'react';
 import './styles/global.sass';
 import { ChevronDown, ChevronUp } from "react-feather";
-export default function DropDown(props) {
+export default function DropDown(props:any) {
   
   const list = props.list;
 
   const [location, setLocation] = useState(props.list);
   const [listOpen, setListOpen] = useState(false);
   const [nestlistOpen, setnestListOpen] = useState(false);
-  const [nestItem, setNestItem] = useState(React.createRef());
+  const [nestItem, setNestItem] = useState({id:0,key:'',selected:false,title:'',options:[]});
   const [keyword, setkeyword] = useState("");
-  
-  const [searchField, setSearchField] = useState(React.createRef());
-  const [searchNestField, setSearchNestField] = useState(React.createRef());
-  const [close, setClose] = useState(true);
+  const [searchField, setSearchField] = useState(React.createRef<HTMLInputElement>());
   const searchable=['Search for fruit', 'No matching fruit']
   const [headerTitle, setHeadeTitle] = useState(props.title);
   
  
-
+  const refs = list.reduce((acc:any, value:any) => {
+    acc[value.id] = React.createRef();
+    return acc;
+  }, {});
+ 
   
-  const toggleNestItem = (id, opId) => {
+  const handleClick = (id:any) =>
+    refs[id].current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+
+  const toggleNestItem = (id:any, opId:any) => {
     let temp = list[id].options[opId];
     console.log(temp.value);
     setHeadeTitle(temp.value);
@@ -34,10 +38,12 @@ export default function DropDown(props) {
       setListOpen(true)
       setnestListOpen((prevState) => !prevState);
     }, 400);
-    
+    if(listOpen){
+      handleClick(id)
+    }
   };
 
-  const toggleItem = (id, key) => {
+  const toggleItem = (id:any, key:any) => {
     let tempp = list[id];
     setNestItem(tempp);
     setnestListOpen((prevState) => !prevState);
@@ -45,34 +51,21 @@ export default function DropDown(props) {
     let temp = list[id];
     temp.selected = !temp.selected;
     list[id] = temp;
-    //  setHeadeTitle(list[id].value)
-   
     setLocation(temp.selected);
   };
-  // const selectItem=(title, id, stateKey)=>{
-  //   const { resetThenSet } = props;
-  //     setHeadeTitle(title)
-  //     setListOpen(false)
-  //     resetThenSet(id, stateKey)
-  // }
 
   const toggleList=()=>{
    
-      setListOpen(prevState=>!prevState.listOpen)
+      setListOpen((prevState:any)=>!prevState.listOpen)
       setkeyword('')
-     
-      // eslint-disable-next-line react/destructuring-assignment
       if (listOpen && searchField.current) {
         searchField.current.focus();
         setkeyword('')
       }
-    
   }
 
- const filterList=(e)=>{
-  
+ const filterList=(e:any)=>{
       setkeyword(e.target.value.toLowerCase())
-   
   }
 
  const listItems=()=>{
@@ -81,20 +74,20 @@ export default function DropDown(props) {
     let tempList = list;
     
     if (keyword.length) {
-      let nestTempList=[]
+      let nestTempList:any[]=[]
       tempList = list
-        .filter((item) => {
+        .filter((item:any) => {
           if(item.title.toLowerCase().slice(0, keyword.length).includes(keyword)){
               nestTempList.push(item)
           }
-          item.options.filter(option=>{
+          item.options.filter((option:any)=>{
             if(option.label.toLowerCase().slice(0, keyword.length).includes(keyword)){
               nestTempList.push(item)
               setnestListOpen(true)
             }
           })
         }   
-        ).sort((a, b) => {
+        ).sort((a:any, b:any) => {
           if (a.title < b.title) { return -1; }
           if (a.title > b.title) { return 1; }
           return 0;
@@ -105,10 +98,11 @@ export default function DropDown(props) {
 
     if (tempList.length) {
       return (
-        tempList.map((item) => (
+        tempList.map((item:any) => (
           <li
           className="dd-list-item"
           id={item.id}
+          ref={refs[item.id]}
           key={item.id}
           onClick={() => toggleItem(item.id, item.key)}
         >
@@ -116,7 +110,6 @@ export default function DropDown(props) {
             type="button"
             className="dd-list-item"
             key={item.id}
-            // onClick={() => selectItem(item.title, item.id, item.key)}
           >
             {item.title}
             {' '}
@@ -140,7 +133,7 @@ export default function DropDown(props) {
                   
                   <ul style={{ display: "flex", flexDirection: "column" }}>
                     { nestItem.options.length>0?
-                    nestItem.options.map((ite) => (
+                    nestItem.options.map((ite:any) => (
                       <li
                         key={ite.id}
                         className="dd-list-item"

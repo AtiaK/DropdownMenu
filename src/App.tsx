@@ -1,5 +1,4 @@
-import React, { Component, useState} from 'react';
-import List from './Scroll';
+import React, {useState} from 'react';
 import Dropdown from './dropdown'
 
 export default function App() {
@@ -177,9 +176,9 @@ export default function App() {
   
   
 
-  const resetThenSet = (id, key) => {
+  const resetThenSet = (id:any, key:number) => {
     const temp = JSON.parse(JSON.stringify(state[key]));
-    temp.forEach((item) => item.selected = false);
+    temp.forEach((item:any) => item.selected = false);
     temp[id].selected = true;
     setKey(temp)
   }
@@ -187,13 +186,13 @@ export default function App() {
       <div className="App">
        
         <h3>Searchable</h3>
-          {/* <Dropdown
+          <Dropdown
             searchable={['Search for fruit', 'No matching fruit']}
             title="Select fruit"
             list={state}
             resetThenSet={resetThenSet}
-          /> */}
-      <List/>
+          />
+      
       </div>
     );
   
