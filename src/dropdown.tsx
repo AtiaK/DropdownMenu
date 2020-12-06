@@ -13,8 +13,7 @@ export default function DropDown(props:any) {
   const [searchField, setSearchField] = useState(React.createRef<HTMLInputElement>());
   const searchable=['Search for fruit', 'No matching fruit']
   const [headerTitle, setHeadeTitle] = useState(props.title);
-  const [searchBox,setSearchBox]=useState(true)
- 
+  
   const refs = list.reduce((acc:any, value:any) => {
     acc[value.id] = React.createRef();
     return acc;
@@ -32,7 +31,7 @@ export default function DropDown(props:any) {
     console.log(temp.value);
     setHeadeTitle(temp.value);
     setListOpen(false)
-    setSearchBox(false)
+   
     setLocation(list[id].selected);
     setTimeout(() => {
       setListOpen(true)
@@ -153,14 +152,14 @@ export default function DropDown(props:any) {
           >
             {searchable
             && (
-            searchBox?
+            
             <input
               ref={searchField}
               className="dd-list-search-bar"
               placeholder={searchable[0]}
               onChange={(e) => filterList(e)}
             />
-            :<p></p>
+           
             )}
             <div className="dd-scroll-list">
               <ul id="dd-list">
