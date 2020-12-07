@@ -94,21 +94,70 @@ if(listOpen === true){
     // YE HAI Dekhna isko
     list.map((item:any)=>{
       return item.options.filter((option:any)=>{
-        if(option.value.toLowerCase().slice(0, keyword.length).includes(keyword)){
+        if(option.value.toString().toLowerCase().slice(0, keyword.length).includes(keyword)){
             nestList.push(item)
         }
       })
     })
-    console.log(nestList)
+    console.log(nestList, "nes")
      
-     console.log(tempList)
+     console.log(tempList, "temp")
   
     }
    
-    if (tempList.length) {
+    if (tempList.length ) {
       
       return (
         tempList.map((item:any) => (
+          
+          <li
+          className="dd-list-item"
+          id={item.id}
+          ref={refs[item.id]}
+          key={item.id}
+          onClick={() => toggleItem(item.id, item.key)}
+        >
+         <div className="dd-header">
+                <div className={`dd-header-titles ${headerTitle === `${item.title}` ? "active": ""}`}>
+                {item.options.length>0?(
+                  <div style={{display:"flex", justifyContent:"space-between", width:"100%"}} onClick={()=>setCh(item.id)}>
+                    {item.title}
+                    {nestlistOpen ? (
+                      <ChevronDown size={24} />
+                    ) : (
+                      <ChevronDown size={24} />
+                    )}
+                  </div>
+                  ):<div style={{width:"100%"}}  onClick={()=>{setHeadeTitle(item.title);  setCh(item.id)}} >{item.title}</div>}
+
+
+                </div>
+
+                {nestlistOpen && nestItem.id === item.id ? (
+                  <ul style={{ display: "flex", flexDirection: "column" }}>
+                    {nestItem.options.map((ite: { id: string | number; value: React.ReactNode; }) => (
+                      <li
+                        key={ite.id}
+                        className="dd-list-item"
+                        onClick={() => toggleNestItem(item.id, ite.id)}
+                      >
+                        <div className={`dd-header-title-list ${headerTitle === `${ite.value}` ? "active": ""}`} >{ite.value}</div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <ul></ul>
+                )}
+              </div>
+           
+            {item.selected}
+          
+          </li>
+        ))
+      );
+    }else if(nestList.length){
+      return (
+        nestList.map((item:any) => (
           
           <li
           className="dd-list-item"
