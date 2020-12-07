@@ -14,6 +14,7 @@ export default function DropDown(props:any) {
   const searchable=['Search for fruit', 'No matching fruit']
   const [headerTitle, setHeadeTitle] = useState(props.title);
   const [ch, setCh] = useState(0);
+  
   const refs = list.reduce((acc:any, value:any) => {
     acc[value.id] = React.createRef();
     return acc;
@@ -77,19 +78,33 @@ if(listOpen === true){
  const listItems=()=>{
     const { list, searchable } = props;
     
-    let tempList = list;
+    let tempList=list
+    let nestList:any[]=[]
     if (keyword.length) {
       tempList = list
         .filter((item:any) => (
           item.title.toLowerCase().slice(0, keyword.length).includes(keyword)
-        )).sort((a:any, b:any) => {
+          
+          )).sort((a:any, b:any) => {
           if (a.title < b.title) { return -1; }
           if (a.title > b.title) { return 1; }
           return 0;
         });
- 
+     
+    // YE HAI Dekhna isko
+    list.map((item:any)=>{
+      return item.options.filter((option:any)=>{
+        if(option.value.toLowerCase().slice(0, keyword.length).includes(keyword)){
+            nestList.push(item)
+        }
+      })
+    })
+    console.log(nestList)
+     
+     console.log(tempList)
+  
     }
-
+   
     if (tempList.length) {
       
       return (
