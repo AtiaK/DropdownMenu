@@ -105,7 +105,7 @@ if(listOpen === true){
          <div className="dd-header">
                 <div className={`dd-header-titles ${headerTitle === `${item.title}` ? "active": ""}`}>
                 {item.options.length>0?(
-                  <div style={{display:"flex", justifyContent:"space-between", width:"100%"}}>
+                  <div style={{display:"flex", justifyContent:"space-between", width:"100%"}} onClick={()=>setCh(item.id)}>
                     {item.title}
                     {nestlistOpen ? (
                       <ChevronDown size={24} />
